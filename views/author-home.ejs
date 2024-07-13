@@ -22,6 +22,10 @@
                 <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
                 <p>Published: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
                 <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+                <p>Number of Views: <%= article.views %></p>
+                <p>Number of Likes: <%= article.likes %></p>
+                <a href="/author/edit/<%= article.article_id %>">Edit</a>
+                <br>
                 <a href="/reader/article/<%= article.article_id %>">Share Link</a>
                 <form action="/author/delete-article/<%= article.article_id %>" method="post">
                     <button type="submit">Delete</button>

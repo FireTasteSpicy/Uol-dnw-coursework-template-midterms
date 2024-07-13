@@ -8,7 +8,8 @@
     <title>Read Article</title>
 </head>
 <body>
-    <h1><%= article.title %></h1>
+    <h1>Read Article</h1>
+    <h2><%= article.title %></h2>
     <p>Published on: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
     <p>Number of Views: <%= article.views %></p>
     <p>Number of Likes: <%= article.likes %></p>

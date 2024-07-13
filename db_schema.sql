@@ -58,7 +58,7 @@ INSERT INTO email_accounts ('email_address', 'user_id') VALUES ('simon@gmail.com
 INSERT INTO email_accounts ('email_address', 'user_id') VALUES ('simon@hotmail.com', 1); 
 INSERT INTO email_accounts ('email_address', 'user_id') VALUES ('dianne@yahoo.co.uk', 2); 
 
-INSERT INTO settings (blog_title, author_name) VALUES ('My Blog', 'Author Name');
+INSERT INTO settings (id, blog_title, author_name) VALUES (1, 'My Blog', 'Author Name');
 
 COMMIT;
 
