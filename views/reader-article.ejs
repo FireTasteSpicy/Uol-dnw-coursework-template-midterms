@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <title>Read Article</title>
+</head>
+<body>
+    <h1><%= article.title %></h1>
+    <p>Published on: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+    <p>Number of Views: <%= article.views %></p>
+    <p>Number of Likes: <%= article.likes %></p>
+    <p><%= article.content %></p>
+    <form action="/reader/article/<%= article.article_id %>/like" method="post">
+        <button type="submit">Like</button>
+    </form>
+    <h3>Comments</h3>
+    <ul>
+        <% comments.forEach(comment => { %>
+            <li>
+                <p><strong><%= comment.commenter_name %>:</strong> <%= comment.comment_text %></p>
+                <p><small>Posted on: <%= new Date(comment.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</small></p>
+            </li>
+        <% }) %>
+    </ul>
+    <form action="/reader/article/<%= article.article_id %>/comment" method="post">
+        <p>
+            Name: <input type="text" name="commenter_name" required />
+        </p>
+        <p>
+            Comment: <textarea name="comment_text" required></textarea>
+        </p>
+        <button type="submit">Submit Comment</button>
+    </form>
+    <a href="/reader/home">Back to Home</a>
+</body>
+</html>

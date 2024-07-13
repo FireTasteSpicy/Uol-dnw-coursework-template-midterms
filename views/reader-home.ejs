@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <title>Reader Home Page</title>
+</head>
+<body>
+    <h1>Reader Home Page</h1>
+    <h2><%= blogTitle %> by <%= authorName %></h2>
+    <ul>
+        <% articles.forEach(article => { %>
+            <li>
+                <h3><a href="/reader/article/<%= article.article_id %>"><%= article.title %></a></h3>
+                <p>Published on: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

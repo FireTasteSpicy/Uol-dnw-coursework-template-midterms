@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <title>Edit Article</title>
+</head>
+<body>
+    <h1>Edit Article Page</h1>
+    <h2>Editing: <%= article.title %></h2>
+    <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+    <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+    <form action="/author/edit/<%= article.article_id %>" method="post">
+        <p>
+            Article Title: 
+            <input type="text" name="title" value="<%= article.title %>" required />
+        </p>
+        <p>
+            Article Text: 
+            <textarea name="content" required><%= article.content %></textarea>
+        </p>
+        <button type="submit">Submit Changes</button>
+    </form>
+    <a href="/author/home">Back to Home</a>
+</body>
+</html>
