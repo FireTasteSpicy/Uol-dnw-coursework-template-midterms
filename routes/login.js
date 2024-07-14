@@ -1,3 +1,9 @@
+/**
+ * login.js
+ * This file contains the routes related to the login functionality of the application.
+ * It handles the display of the login page and the submission of the login form.
+ * The file exports an Express router that can be used in the main application file.
+ */
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
