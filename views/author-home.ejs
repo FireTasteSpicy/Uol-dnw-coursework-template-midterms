@@ -8,47 +8,48 @@
     <title>Author Home Page</title>
 </head>
 <body>
-    <h1>Author Home Page</h1>
-    <h2><%= blogTitle %> by <%= authorName %></h2>
-    <a href="/author/settings">Settings</a>
-    <form action="/author/create-draft" method="post">
-        <button type="submit">Create New Draft</button>
-    </form>
-    <h2>Published Articles</h2>
-    <ul>
-        <% publishedArticles.forEach(article => { %>
-            <li>
-                <h3><%= article.title %></h3>
-                <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-                <p>Published: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-                <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-                <p>Number of Views: <%= article.views %></p>
-                <p>Number of Likes: <%= article.likes %></p>
-                <a href="/author/edit/<%= article.article_id %>">Edit</a>
-                <br>
-                <a href="/reader/article/<%= article.article_id %>">Share Link</a>
-                <form action="/author/delete-article/<%= article.article_id %>" method="post">
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        <% }) %>
-    </ul>
-    <h2>Draft Articles</h2>
-    <ul>
-        <% draftArticles.forEach(article => { %>
-            <li>
-                <h3><%= article.title %></h3>
-                <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-                <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-                <a href="/author/edit/<%= article.article_id %>">Edit</a>
-                <form action="/author/publish-article/<%= article.article_id %>" method="post">
-                    <button type="submit">Publish</button>
-                </form>
-                <form action="/author/delete-article/<%= article.article_id %>" method="post">
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        <% }) %>
-    </ul>
+    <div class="container">
+        <h1 class="mt-5">Author Home Page</h1>
+        <h2 class="mb-3"><%= blogTitle %> by <%= authorName %></h2>
+        <a class="btn btn-primary mb-3" href="/author/settings">Settings</a>
+        <form action="/author/create-draft" method="post" class="mb-3">
+            <button type="submit" class="btn btn-success">Create New Draft</button>
+        </form>
+        <h2 class="mb-3">Published Articles</h2>
+        <ul class="list-group mb-5">
+            <% publishedArticles.forEach(article => { %>
+                <li class="list-group-item">
+                    <h3><%= article.title %></h3>
+                    <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+                    <p>Published: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+                    <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+                    <p>Number of Views: <%= article.views %></p>
+                    <p>Number of Likes: <%= article.likes %></p>
+                    <a class="btn btn-warning" href="/author/edit/<%= article.article_id %>">Edit</a>
+                    <a class="btn btn-info" href="/reader/article/<%= article.article_id %>">Share Link</a>
+                    <form action="/author/delete-article/<%= article.article_id %>" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+        <h2 class="mb-3">Draft Articles</h2>
+        <ul class="list-group">
+            <% draftArticles.forEach(article => { %>
+                <li class="list-group-item">
+                    <h3><%= article.title %></h3>
+                    <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+                    <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+                    <a class="btn btn-warning" href="/author/edit/<%= article.article_id %>">Edit</a>
+                    <form action="/author/publish-article/<%= article.article_id %>" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-success">Publish</button>
+                    </form>
+                    <form action="/author/delete-article/<%= article.article_id %>" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
 </body>
 </html>

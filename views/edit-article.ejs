@@ -8,21 +8,23 @@
     <title>Edit Article</title>
 </head>
 <body>
-    <h1>Edit Article Page</h1>
-    <h2>Editing: <%= article.title %></h2>
-    <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-    <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-    <form action="/author/edit/<%= article.article_id %>" method="post">
-        <p>
-            Article Title: 
-            <input type="text" name="title" value="<%= article.title %>" required />
-        </p>
-        <p>
-            Article Text: 
-            <textarea name="content" required><%= article.content %></textarea>
-        </p>
-        <button type="submit">Submit Changes</button>
-    </form>
-    <a href="/author/home">Back to Home</a>
+    <div class="container">
+        <h1 class="mt-5">Edit Article Page</h1>
+        <h2 class="mb-3">Editing: <%= article.title %></h2>
+        <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+        <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+        <form action="/author/edit/<%= article.article_id %>" method="post" class="mb-3">
+            <div class="form-group">
+                <label for="title">Article Title:</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= article.title %>" required />
+            </div>
+            <div class="form-group">
+                <label for="content">Article Text:</label>
+                <textarea class="form-control" id="content" name="content" rows="10" required><%= article.content %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Changes</button>
+        </form>
+        <a class="btn btn-secondary" href="/author/home">Back to Home</a>
+    </div>
 </body>
 </html>

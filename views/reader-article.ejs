@@ -8,33 +8,37 @@
     <title>Read Article</title>
 </head>
 <body>
-    <h1>Read Article</h1>
-    <h2><%= article.title %></h2>
-    <p>Published on: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
-    <p>Number of Views: <%= article.views %></p>
-    <p>Number of Likes: <%= article.likes %></p>
-    <p><%= article.content %></p>
-    <form action="/reader/article/<%= article.article_id %>/like" method="post">
-        <button type="submit">Like</button>
-    </form>
-    <h3>Comments</h3>
-    <ul>
-        <% comments.forEach(comment => { %>
-            <li>
-                <p><strong><%= comment.commenter_name %>:</strong> <%= comment.comment_text %></p>
-                <p><small>Posted on: <%= new Date(comment.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</small></p>
-            </li>
-        <% }) %>
-    </ul>
-    <form action="/reader/article/<%= article.article_id %>/comment" method="post">
-        <p>
-            Name: <input type="text" name="commenter_name" required />
-        </p>
-        <p>
-            Comment: <textarea name="comment_text" required></textarea>
-        </p>
-        <button type="submit">Submit Comment</button>
-    </form>
-    <a href="/reader/home">Back to Home</a>
+    <div class="container">
+        <h1 class="mt-5">Read Article</h1>
+        <h2 class="mb-3"><%= article.title %></h2>
+        <p>Published on: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+        <p>Number of Views: <%= article.views %></p>
+        <p>Number of Likes: <%= article.likes %></p>
+        <p><%= article.content %></p>
+        <form action="/reader/article/<%= article.article_id %>/like" method="post" class="mb-3">
+            <button type="submit" class="btn btn-primary">Like</button>
+        </form>
+        <h3>Comments</h3>
+        <ul class="list-group mb-3">
+            <% comments.forEach(comment => { %>
+                <li class="list-group-item">
+                    <p><strong><%= comment.commenter_name %>:</strong> <%= comment.comment_text %></p>
+                    <p><small>Posted on: <%= new Date(comment.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</small></p>
+                </li>
+            <% }) %>
+        </ul>
+        <form action="/reader/article/<%= article.article_id %>/comment" method="post" class="mb-3">
+            <div class="form-group">
+                <label for="commenter_name">Name:</label>
+                <input type="text" class="form-control" id="commenter_name" name="commenter_name" required />
+            </div>
+            <div class="form-group">
+                <label for="comment_text">Comment:</label>
+                <textarea class="form-control" id="comment_text" name="comment_text" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+        </form>
+        <a class="btn btn-secondary" href="/reader/home">Back to Home</a>
+    </div>
 </body>
 </html>

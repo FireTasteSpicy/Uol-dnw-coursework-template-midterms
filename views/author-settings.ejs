@@ -8,18 +8,20 @@
     <title>Author Settings</title>
 </head>
 <body>
-    <h1>Settings Page</h1>
-    <form action="/author/settings" method="post">
-        <p>
-            Blog Title: 
-            <input type="text" name="blog_title" value="<%= blogTitle %>" required />
-        </p>
-        <p>
-            Author Name: 
-            <input type="text" name="author_name" value="<%= authorName %>" required />
-        </p>
-        <button type="submit">Save Settings</button>
-    </form>
-    <a href="/author/home">Back to Home</a>
+    <div class="container">
+        <h1 class="mt-5">Settings Page</h1>
+        <form action="/author/settings" method="post" class="mb-3">
+            <div class="form-group">
+                <label for="blog_title">Blog Title:</label>
+                <input type="text" class="form-control" id="blog_title" name="blog_title" value="<%= blogTitle %>" required />
+            </div>
+            <div class="form-group">
+                <label for="author_name">Author Name:</label>
+                <input type="text" class="form-control" id="author_name" name="author_name" value="<%= authorName %>" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+        </form>
+        <a class="btn btn-secondary" href="/author/home">Back to Home</a>
+    </div>
 </body>
 </html>
