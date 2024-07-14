@@ -6,10 +6,12 @@
  */
 
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const router = express.Router();
 
 /**
  * @desc Display the reader home page with a list of published articles
+ * @returns {void} Renders the reader-home.ejs template with a list of published articles
  */
 router.get('/home', (req, res, next) => {
     const settingsQuery = "SELECT * FROM settings WHERE id = 1"; // Assuming single row settings table
@@ -36,6 +38,8 @@ router.get('/home', (req, res, next) => {
 
 /**
  * @desc Display an individual article with comments and like functionality
+ * @param {string} req.params.id - ID of the article to be displayed
+ * @returns {void} Renders the reader-article.ejs template with the article data and comments
  */
 router.get('/article/:id', (req, res, next) => {
     const articleQuery = "SELECT * FROM articles WHERE article_id = ?";
@@ -62,6 +66,8 @@ router.get('/article/:id', (req, res, next) => {
 
 /**
  * @desc Handle liking an article
+ * @param {string} req.params.id - ID of the article to be liked
+ * @returns {void} Redirects to the article page
  */
 router.post('/article/:id/like', (req, res, next) => {
     const likeQuery = "UPDATE articles SET likes = likes + 1 WHERE article_id = ?";
@@ -78,19 +84,32 @@ router.post('/article/:id/like', (req, res, next) => {
 
 /**
  * @desc Handle adding a comment to an article
+ * @param {string} req.params.id - ID of the article to be commented on
+ * @param {string} req.body.commenter_name - Name of the commenter
+ * @param {string} req.body.comment_text - Text of the comment
+ * @returns {void} Redirects to the article page
  */
-router.post('/article/:id/comment', (req, res, next) => {
-    const commentQuery = "INSERT INTO comments (article_id, commenter_name, comment_text, created_at) VALUES (?, ?, ?, ?)";
-    const now = new Date().toISOString();
-    const queryParameters = [req.params.id, req.body.commenter_name, req.body.comment_text, now];
-
-    global.db.run(commentQuery, queryParameters, function(err) {
-        if (err) {
-            next(err);
-        } else {
-            res.redirect(`/reader/article/${req.params.id}`);
+router.post('/article/:id/comment',
+    body('commenter_name').isString().trim().escape(),
+    body('comment_text').isString().trim().escape(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
-    });
-});
+
+        const commentQuery = "INSERT INTO comments (article_id, commenter_name, comment_text, created_at) VALUES (?, ?, ?, ?)";
+        const now = new Date().toISOString();
+        const queryParameters = [req.params.id, req.body.commenter_name, req.body.comment_text, now];
+
+        global.db.run(commentQuery, queryParameters, function(err) {
+            if (err) {
+                next(err);
+            } else {
+                res.redirect(`/reader/article/${req.params.id}`);
+            }
+        });
+    }
+);
 
 module.exports = router;

@@ -9,8 +9,11 @@
 </head>
 <body>
     <div class="container">
+        <!-- Main Heading for the Reader Home Page -->
         <h1 class="mt-5">Reader Home Page</h1>
+        <!-- Display Blog Title and Author Name -->
         <h2 class="mb-3"><%= blogTitle %> by <%= authorName %></h2>
+        <!-- List of Published Articles -->
         <ul class="list-group">
             <% articles.forEach(article => { %>
                 <li class="list-group-item">

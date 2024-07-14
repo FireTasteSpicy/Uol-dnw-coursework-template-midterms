@@ -9,12 +9,17 @@
 </head>
 <body>
     <div class="container">
+        <!-- Main Heading for the Author Home Page -->
         <h1 class="mt-5">Author Home Page</h1>
+        <!-- Display Blog Title and Author Name -->
         <h2 class="mb-3"><%= blogTitle %> by <%= authorName %></h2>
+        <!-- Link to Settings Page -->
         <a class="btn btn-primary mb-3" href="/author/settings">Settings</a>
+        <!-- Form to Create a New Draft Article -->
         <form action="/author/create-draft" method="post" class="mb-3">
             <button type="submit" class="btn btn-success">Create New Draft</button>
         </form>
+        <!-- List of Published Articles -->
         <h2 class="mb-3">Published Articles</h2>
         <ul class="list-group mb-5">
             <% publishedArticles.forEach(article => { %>
@@ -25,14 +30,17 @@
                     <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
                     <p>Number of Views: <%= article.views %></p>
                     <p>Number of Likes: <%= article.likes %></p>
+                    <!-- Links to Edit and Share the Article -->
                     <a class="btn btn-warning" href="/author/edit/<%= article.article_id %>">Edit</a>
                     <a class="btn btn-info" href="/reader/article/<%= article.article_id %>">Share Link</a>
+                    <!-- Form to Delete the Article -->
                     <form action="/author/delete-article/<%= article.article_id %>" method="post" class="d-inline">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </li>
             <% }) %>
         </ul>
+        <!-- List of Draft Articles -->
         <h2 class="mb-3">Draft Articles</h2>
         <ul class="list-group">
             <% draftArticles.forEach(article => { %>
@@ -40,10 +48,12 @@
                     <h3><%= article.title %></h3>
                     <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
                     <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+                    <!-- Links to Edit and Publish the Draft -->
                     <a class="btn btn-warning" href="/author/edit/<%= article.article_id %>">Edit</a>
                     <form action="/author/publish-article/<%= article.article_id %>" method="post" class="d-inline">
                         <button type="submit" class="btn btn-success">Publish</button>
                     </form>
+                    <!-- Form to Delete the Draft -->
                     <form action="/author/delete-article/<%= article.article_id %>" method="post" class="d-inline">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>

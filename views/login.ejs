@@ -9,10 +9,13 @@
 </head>
 <body>
     <div class="container">
+        <!-- Main Heading for the Login Page -->
         <h1 class="mt-5">Author Login</h1>
         <% if (typeof error !== 'undefined') { %>
+            <!-- Display Error Message if Login Fails -->
             <div class="alert alert-danger"><%= error %></div>
         <% } %>
+        <!-- Form for Author Login -->
         <form action="/author/login" method="post">
             <div class="form-group">
                 <label for="password">Password</label>

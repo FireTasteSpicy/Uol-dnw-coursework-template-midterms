@@ -9,15 +9,21 @@
 </head>
 <body>
     <div class="container">
+        <!-- Main Heading for the Read Article Page -->
         <h1 class="mt-5">Read Article</h1>
+        <!-- Display Article Title -->
         <h2 class="mb-3"><%= article.title %></h2>
+        <!-- Display Publication Date, Views, and Likes -->
         <p>Published on: <%= new Date(article.published_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
         <p>Number of Views: <%= article.views %></p>
         <p>Number of Likes: <%= article.likes %></p>
+        <!-- Display Article Content -->
         <p><%= article.content %></p>
+        <!-- Form to Like the Article -->
         <form action="/reader/article/<%= article.article_id %>/like" method="post" class="mb-3">
             <button type="submit" class="btn btn-primary">Like</button>
         </form>
+        <!-- Section for Comments -->
         <h3>Comments</h3>
         <ul class="list-group mb-3">
             <% comments.forEach(comment => { %>
@@ -27,6 +33,7 @@
                 </li>
             <% }) %>
         </ul>
+        <!-- Form to Add a New Comment -->
         <form action="/reader/article/<%= article.article_id %>/comment" method="post" class="mb-3">
             <div class="form-group">
                 <label for="commenter_name">Name:</label>
@@ -38,6 +45,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit Comment</button>
         </form>
+        <!-- Link to Go Back to Reader Home Page -->
         <a class="btn btn-secondary" href="/reader/home">Back to Home</a>
     </div>
 </body>

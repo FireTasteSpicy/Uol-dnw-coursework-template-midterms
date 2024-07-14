@@ -9,10 +9,14 @@
 </head>
 <body>
     <div class="container">
+        <!-- Main Heading for the Edit Article Page -->
         <h1 class="mt-5">Edit Article Page</h1>
+        <!-- Display Current Article Title -->
         <h2 class="mb-3">Editing: <%= article.title %></h2>
+        <!-- Display Creation and Last Modified Dates -->
         <p>Created: <%= new Date(article.created_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
         <p>Last Modified: <%= new Date(article.updated_at).toLocaleString('en-GB', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %> UTC</p>
+        <!-- Form to Update Article Title and Content -->
         <form action="/author/edit/<%= article.article_id %>" method="post" class="mb-3">
             <div class="form-group">
                 <label for="title">Article Title:</label>
@@ -24,6 +28,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit Changes</button>
         </form>
+        <!-- Link to Go Back to Author Home Page -->
         <a class="btn btn-secondary" href="/author/home">Back to Home</a>
     </div>
 </body>

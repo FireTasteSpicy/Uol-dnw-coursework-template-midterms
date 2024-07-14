@@ -6,19 +6,45 @@
 // Set up express, bodyparser and EJS
 const express = require('express');
 const session = require('express-session');
+const bodyParser = require("body-parser");
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const compression = require('compression');
+
 const app = express();
 const port = 3000;
-var bodyParser = require("body-parser");
+
+// Set up security middlewares
+app.use(helmet());
+app.use(cors());
+
+// Rate limiting middleware (Security)
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again after 15 minutes'
+});
+app.use(limiter);
+
+// Compression middleware
+app.use(compression());
+
+// Set up bodyparser and EJS
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs'); // set the app to use ejs for rendering
 app.use(express.static(__dirname + '/public')); // set location of static files
 
-// Set up session management
+// Set up session management with security
 app.use(session({
-    secret: 'yourSecretKey', // Change this to a strong, random secret
+    secret: process.env.SESSION_SECRET || 'yourSecretKey', // Change this to a strong, random secret
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Use true if HTTPS is enabled
+    cookie: {
+        secure: false, // Use true if HTTPS is enabled
+        httpOnly: true, // Prevent client-side JS from accessing the cookie
+        maxAge: 60000 // Set cookie expiration time
+    }
 }));
 
 // Set up SQLite
@@ -60,9 +86,6 @@ app.use('/author', authMiddleware, authorRoutes);
 
 const readerRoutes = require('./routes/reader');
 app.use('/reader', readerRoutes);
-
-
-
 
 // Make the web application listen for HTTP requests
 app.listen(port, () => {
