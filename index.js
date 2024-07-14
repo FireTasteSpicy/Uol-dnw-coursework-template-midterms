@@ -22,7 +22,7 @@ app.use(cors());
 // Rate limiting middleware (Security)
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
+    max: 500, // limit each IP to 500 requests per windowMs
     message: 'Too many requests from this IP, please try again after 15 minutes'
 });
 app.use(limiter);
@@ -43,7 +43,7 @@ app.use(session({
     cookie: {
         secure: false, // Use true if HTTPS is enabled
         httpOnly: true, // Prevent client-side JS from accessing the cookie
-        maxAge: 60000 // Set cookie expiration time
+        maxAge: 60 * 60 * 1000 // Set cookie expiration time
     }
 }));
 
