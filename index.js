@@ -78,9 +78,6 @@ app.get('/', (req, res) => {
 const loginRoutes = require('./routes/login');
 app.use('/author/login', loginRoutes);
 
-const usersRoutes = require('./routes/users');
-app.use('/users', usersRoutes);
-
 const authorRoutes = require('./routes/author');
 app.use('/author', authMiddleware, authorRoutes);
 
