@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-const { body, validationResult } = require('express-validator');
+const { body, validationResult, param } = require('express-validator');
 const router = express.Router();
 
 /**
@@ -41,28 +41,41 @@ router.get('/home', (req, res, next) => {
  * @param {string} req.params.id - ID of the article to be displayed
  * @returns {void} Renders the reader-article.ejs template with the article data and comments
  */
-router.get('/article/:id', (req, res, next) => {
-    const articleQuery = "SELECT * FROM articles WHERE article_id = ?";
-    const commentsQuery = "SELECT * FROM comments WHERE article_id = ? ORDER BY created_at ASC";
-    const queryParameters = [req.params.id];
+router.get('/article/:id', 
+    param('id').isInt().toInt(), 
+    (req, res, next) => {
+        const articleQuery = "SELECT * FROM articles WHERE article_id = ?";
+        const commentsQuery = "SELECT * FROM comments WHERE article_id = ? ORDER BY created_at ASC";
+        const updateViewsQuery = "UPDATE articles SET views = views + 1 WHERE article_id = ?";
+        const queryParameters = [req.params.id];
 
-    global.db.get(articleQuery, queryParameters, (err, article) => {
-        if (err) {
-            next(err);
-        } else {
-            global.db.all(commentsQuery, queryParameters, (err, comments) => {
-                if (err) {
-                    next(err);
-                } else {
-                    res.render('reader-article', {
-                        article: article,
-                        comments: comments
-                    });
-                }
-            });
-        }
-    });
-});
+        // Increment the view count for the specified article
+        global.db.run(updateViewsQuery, queryParameters, function(err) {
+            if (err) {
+                next(err);
+            } else {
+                // Retrieve the specified article and its comments from the database
+                global.db.get(articleQuery, queryParameters, (err, article) => {
+                    if (err) {
+                        next(err);
+                    } else {
+                        global.db.all(commentsQuery, queryParameters, (err, comments) => {
+                            if (err) {
+                                next(err);
+                            } else {
+                                // Render the reader-article template with the retrieved data
+                                res.render('reader-article', {
+                                    article: article,
+                                    comments: comments
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+);
 
 /**
  * @desc Handle liking an article

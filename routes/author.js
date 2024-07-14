@@ -68,17 +68,34 @@ router.post('/create-draft', (req, res, next) => {
  * @returns {void} Redirects to the author home page
  */
 router.post('/delete-article/:id', (req, res, next) => {
-    const query = "DELETE FROM articles WHERE article_id = ?";
+    const deleteCommentsQuery = "DELETE FROM comments WHERE article_id = ?";
+    const deleteLikesQuery = "DELETE FROM likes WHERE article_id = ?";
+    const deleteArticleQuery = "DELETE FROM articles WHERE article_id = ?";
     const queryParameters = [req.params.id];
 
-    global.db.run(query, queryParameters, function(err) {
+    // Delete associated comments, likes, and then the article
+    global.db.run(deleteCommentsQuery, queryParameters, function(err) {
         if (err) {
-            next(err);
+            next(err); // Pass the error to the error handler
         } else {
-            res.redirect('/author/home');
+            global.db.run(deleteLikesQuery, queryParameters, function(err) {
+                if (err) {
+                    next(err); // Pass the error to the error handler
+                } else {
+                    global.db.run(deleteArticleQuery, queryParameters, function(err) {
+                        if (err) {
+                            next(err); // Pass the error to the error handler
+                        } else {
+                            // Redirect to the author home page
+                            res.redirect('/author/home');
+                        }
+                    });
+                }
+            });
         }
     });
 });
+
 
 /**
  * @desc Publish a draft article

@@ -40,25 +40,29 @@ CREATE TABLE IF NOT EXISTS comments (
     FOREIGN KEY (article_id) REFERENCES articles(article_id)
 );
 
+CREATE TABLE IF NOT EXISTS likes (
+    like_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    article_id INTEGER,
+    FOREIGN KEY (article_id) REFERENCES articles(article_id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS settings (
     id INTEGER PRIMARY KEY,
     blog_title TEXT NOT NULL,
     author_name TEXT NOT NULL
 );
 
+INSERT INTO settings (id, blog_title, author_name) VALUES (1, 'My Blog', 'Author Name');
+
 -- Insert default data (if necessary here)
 
--- Set up three users
 INSERT INTO users ('user_name') VALUES ('Simon Star');
 INSERT INTO users ('user_name') VALUES ('Dianne Dean');
 INSERT INTO users ('user_name') VALUES ('Harry Hilbert');
 
--- Give Simon two email addresses and Diane one, but Harry has none
 INSERT INTO email_accounts ('email_address', 'user_id') VALUES ('simon@gmail.com', 1); 
 INSERT INTO email_accounts ('email_address', 'user_id') VALUES ('simon@hotmail.com', 1); 
 INSERT INTO email_accounts ('email_address', 'user_id') VALUES ('dianne@yahoo.co.uk', 2); 
-
-INSERT INTO settings (id, blog_title, author_name) VALUES (1, 'My Blog', 'Author Name');
 
 COMMIT;
 
